@@ -1,2 +1,2 @@
 compile:
-	g++ main.cpp Account.cpp Input.cpp -o calc
+	g++ main.cpp Account.cpp Input.cpp -o tradingtoolkit
