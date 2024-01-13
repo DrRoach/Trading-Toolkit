@@ -53,7 +53,7 @@ double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
     double LeverageMultiplyer = OpenPrice / Leverage;
 
     double TradeRiskAsPercentage = TradeRisk / LeverageMultiplyer;
-    double RiskMultiplyer = 100 / (TradeRiskAsPercentage * 100);
+    double RiskMultiplyer = 1 / TradeRiskAsPercentage;
 
     return MaxRiskPerTrade * RiskMultiplyer;
 }
