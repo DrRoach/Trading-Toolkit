@@ -2,17 +2,27 @@
 
 Account::Account()
 {
-    DataFileName = "data.txt";
+    _DataFileName = "data.txt";
 }
 
 double Account::GetMaxRiskPercentage()
 {
-    return MaxRisk * 100;
+    return _MaxRisk * 100;
 }
 
 double Account::GetRiskPerTrade()
 {
-    return TradingSize * MaxRisk;
+    return _TradingSize * _MaxRisk;
+}
+
+float Account::GetMaxRiskPerTrade()
+{
+    return _MaxRiskPerTrade;
+}
+
+float Account::GetLeverage()
+{
+    return _Leverage;
 }
 
 void Account::Setup()
@@ -27,12 +37,12 @@ void Account::Setup()
 
 int Account::ConsecutiveLosses()
 {
-    return (Size - TradingSize) / GetRiskPerTrade();
+    return (_Size - _TradingSize) / GetRiskPerTrade();
 }
 
 bool Account::IsSetup()
 {
-    std::ifstream DataFile (DataFileName);
+    std::ifstream DataFile (_DataFileName);
     int RequiredLines = 3;
 
     if (DataFile.is_open()) {
@@ -47,11 +57,6 @@ bool Account::IsSetup()
     return false;
 }
 
-double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
-{
-    return MaxRiskPerTrade * (1 / (TradeRisk / (OpenPrice / Leverage)));
-}
-
 /**
  * Format for save file:
  *  AccountSize
@@ -60,33 +65,32 @@ double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
  */
 void Account::SaveData()
 {
-    std::ofstream DataFile (DataFileName);
+    std::ofstream DataFile (_DataFileName);
     if (DataFile.is_open()) {
-        DataFile << Size << "\n";
-        DataFile << TradingSize << "\n";
-        DataFile << Leverage << "\n";
+        DataFile << _Size << "\n";
+        DataFile << _TradingSize << "\n";
+        DataFile << _Leverage << "\n";
         DataFile.close();
     }
 }
 
 void Account::LoadData()
 {
-    std::ifstream DataFile (DataFileName);
+    std::ifstream DataFile (_DataFileName);
     if (DataFile.is_open()) {
         std::string line;
         int LineNum = 0;
         while (getline(DataFile, line)) {
-            switch (LineNum) {
+            switch (LineNum++) {
                 case 0:
-                    Size = std::stof(line);
+                    _Size = std::stof(line);
                     break;
                 case 1:
-                    TradingSize = std::stof(line);
+                    _TradingSize = std::stof(line);
                 case 2:
-                    Leverage = std::stof(line);
+                    _Leverage = std::stof(line);
                     break;
             }
-            LineNum++;
         }
         DataFile.close();
     }
@@ -95,18 +99,18 @@ void Account::LoadData()
 void Account::GetData()
 {
     std::cout << "What is the account size?" << std::endl;
-    std::cin >> Size;
+    std::cin >> _Size;
 
     std::cout << "What is the trading account size?" << std::endl;
-    std::cin >> TradingSize;
+    std::cin >> _TradingSize;
 
     std::cout << "What is the leverage?" << std::endl;
-    std::cin >> Leverage;
+    std::cin >> _Leverage;
 
     SaveData();
 }
 
 void Account::CalculateRequiredData()
 {
-    MaxRiskPerTrade = TradingSize * MaxRisk;
+    _MaxRiskPerTrade = _TradingSize * _MaxRisk;
 }

@@ -9,19 +9,20 @@ class Account
 
         double GetMaxRiskPercentage();
         double GetRiskPerTrade();
+        float GetMaxRiskPerTrade();
+        float GetLeverage();
 
         void Setup();
         int ConsecutiveLosses();
         bool IsSetup();
-        double CalculatePositionSize(double OpenPrice, double TradeRisk);
 
     private:
-        std::string DataFileName;
-        float Size;
-        float TradingSize;
-        static const double MaxRisk = 0.01;
-        float Leverage;
-        float MaxRiskPerTrade;
+        std::string _DataFileName;
+        float _Size;
+        float _TradingSize;
+        static const double _MaxRisk = 0.01;
+        float _Leverage;
+        float _MaxRiskPerTrade;
 
         void SaveData();
         void LoadData();
