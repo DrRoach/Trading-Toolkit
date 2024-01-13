@@ -49,13 +49,7 @@ bool Account::IsSetup()
 
 double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
 {
-    // Work out move required for every £1 staked
-    double LeverageMultiplyer = OpenPrice / Leverage;
-
-    double TradeRiskAsPercentage = TradeRisk / LeverageMultiplyer;
-    double RiskMultiplyer = 1 / TradeRiskAsPercentage;
-
-    return MaxRiskPerTrade * RiskMultiplyer;
+    return MaxRiskPerTrade * (1 / (TradeRisk / (OpenPrice / Leverage)));
 }
 
 /**
