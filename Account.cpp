@@ -33,7 +33,7 @@ int Account::ConsecutiveLosses()
 bool Account::IsSetup()
 {
     std::ifstream DataFile (DataFileName);
-    int RequiredLines = 4;
+    int RequiredLines = 3;
 
     if (DataFile.is_open()) {
         std::string ignored;
@@ -47,22 +47,31 @@ bool Account::IsSetup()
     return false;
 }
 
-double Account::CalculatePositionSize(double TradeRisk)
+double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
 {
-    double TradeRiskAsPercentage = TradeRisk / WholeTradeRisk;
+    // Work out move required for every £1 staked
+    double LeverageMultiplyer = OpenPrice / Leverage;
+
+    double TradeRiskAsPercentage = TradeRisk / LeverageMultiplyer;
     double RiskMultiplyer = 100 / (TradeRiskAsPercentage * 100);
 
     return MaxRiskPerTrade * RiskMultiplyer;
 }
 
+/**
+ * Format for save file:
+ *  AccountSize
+ *  TradingSize
+ *  MaxRiskAsPercentage (This will be replaced with leverage)
+ *  MaxRiskAsPrice (This will be replaced with leverage)
+ */
 void Account::SaveData()
 {
     std::ofstream DataFile (DataFileName);
     if (DataFile.is_open()) {
         DataFile << Size << "\n";
         DataFile << TradingSize << "\n";
-        DataFile << TradeMaxRiskAsPercentage << "\n";
-        DataFile << TradeMaxRiskAsPrice << "\n";
+        DataFile << Leverage << "\n";
         DataFile.close();
     }
 }
@@ -81,10 +90,7 @@ void Account::LoadData()
                 case 1:
                     TradingSize = std::stof(line);
                 case 2:
-                    TradeMaxRiskAsPercentage = std::stof(line);
-                    break;
-                case 3:
-                    TradeMaxRiskAsPrice = std::stod(line);
+                    Leverage = std::stof(line);
                     break;
             }
             LineNum++;
@@ -101,11 +107,8 @@ void Account::GetData()
     std::cout << "What is the trading account size?" << std::endl;
     std::cin >> TradingSize;
 
-    std::cout << "What is the max risk per trade as a percentage?" << std::endl;
-    std::cin >> TradeMaxRiskAsPercentage;
-
-    std::cout << "What is the max risk per trade as price?" << std::endl;
-    std::cin >> TradeMaxRiskAsPrice;
+    std::cout << "What is the leverage?" << std::endl;
+    std::cin >> Leverage;
 
     SaveData();
 }
@@ -113,5 +116,4 @@ void Account::GetData()
 void Account::CalculateRequiredData()
 {
     MaxRiskPerTrade = TradingSize * MaxRisk;
-    WholeTradeRisk = (100 / TradeMaxRiskAsPercentage) * TradeMaxRiskAsPrice;
 }

@@ -13,17 +13,15 @@ class Account
         void Setup();
         int ConsecutiveLosses();
         bool IsSetup();
-        double CalculatePositionSize(double TradeRisk);
+        double CalculatePositionSize(double OpenPrice, double TradeRisk);
 
     private:
         std::string DataFileName;
         float Size;
         float TradingSize;
         static const double MaxRisk = 0.01;
-        float TradeMaxRiskAsPercentage;
-        double TradeMaxRiskAsPrice;
+        float Leverage;
         float MaxRiskPerTrade;
-        double WholeTradeRisk;
 
         void SaveData();
         void LoadData();
