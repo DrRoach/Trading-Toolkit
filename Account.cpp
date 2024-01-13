@@ -56,8 +56,7 @@ double Account::CalculatePositionSize(double OpenPrice, double TradeRisk)
  * Format for save file:
  *  AccountSize
  *  TradingSize
- *  MaxRiskAsPercentage (This will be replaced with leverage)
- *  MaxRiskAsPrice (This will be replaced with leverage)
+ *  Leverage
  */
 void Account::SaveData()
 {
