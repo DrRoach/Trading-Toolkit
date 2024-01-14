@@ -23,6 +23,16 @@ double Trade::GetPositionSize()
     return _PositionSize;
 }
 
+double Trade::GetOpenPrice()
+{
+    return _OpenPrice;
+}
+
+double Trade::GetRisk()
+{
+    return _Risk;
+}
+
 double Trade::CalculatePositionSize(double OpenPrice, double TradeRisk, float MaxRiskPerTrade, 
     float Leverage)
 {

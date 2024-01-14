@@ -127,5 +127,10 @@ void Input::PrepTrade()
 
 void Input::ListTrades()
 {
-    std::cout << "Num of trades: " << _Trades.size() << std::endl;
+    std::cout << "Number of trades: " << _Trades.size() << std::endl;
+    for (int i = 0; i < _Trades.size(); i++) {
+        Trade* trade = _Trades.at(i);
+        std::cout << "ID: " << i << " Open price: " << trade->GetOpenPrice() << " Risk: " << 
+            trade->GetRisk() << " Position size: " << trade-> GetPositionSize() << std::endl;
+    }
 }

@@ -9,6 +9,8 @@ class Trade
         Trade(double OpenPrice, double Risk, double PositionSize, bool Active);
 
         double GetPositionSize();
+        double GetOpenPrice();
+        double GetRisk();
 
         double CalculatePositionSize(double OpenPrice, double TradeRisk, float MaxRiskPerTrade, 
             float Leverage);
