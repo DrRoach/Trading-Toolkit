@@ -35,6 +35,8 @@ Input::Input()
             ActivateTrade();
         } else if (Command == "et") {
             EndTrade();
+        } else if (Command == "sr") {
+            SetRisk();
         } else if (Command == "q") {
             // This is here so we don't enter "Unknown command" else
         } else {
@@ -121,6 +123,7 @@ void Input::Help()
         std::endl;
     std::cout << "at - Activate trade. Activate a prepped trade" << std::endl;
     std::cout << "et - End trade. End an active trade" << std::endl;
+    std::cout << "sr - Set risk. Set the maximum risk per trade as a percentage. WARNING - Risking more than 1% of your account can end badly." << std::endl;
     std::cout << "? - List available commands" << std::endl;
     std::cout << "q - Quit program" << std::endl;
 }
@@ -245,5 +248,16 @@ void Input::EndTrade()
     }
 
     Trade* trade = _Trades.at(TradeID);
+    // TODO: Finish this
+}
 
+void Input::SetRisk()
+{
+    float Risk;
+
+    std::cout << "What risk would you like to set (as a percentage)?" << std::endl;
+
+    std::cin >> Risk;
+
+    _Account->SetMaxRisk(Risk);
 }

@@ -12,6 +12,8 @@ class Account
         float GetMaxRiskPerTrade();
         float GetLeverage();
 
+        void SetMaxRisk(float Risk);
+
         void Setup();
         int ConsecutiveLosses();
         bool IsSetup();
@@ -20,12 +22,10 @@ class Account
         std::string _DataFileName;
         float _Size;
         float _TradingSize;
-        static const double _MaxRisk = 0.01;
+        double _MaxRisk = 0.01;
         float _Leverage;
-        float _MaxRiskPerTrade;
 
         void SaveData();
         void LoadData();
         void GetData();
-        void CalculateRequiredData();
 };

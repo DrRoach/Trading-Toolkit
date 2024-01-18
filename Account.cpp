@@ -17,12 +17,17 @@ double Account::GetRiskPerTrade()
 
 float Account::GetMaxRiskPerTrade()
 {
-    return _MaxRiskPerTrade;
+    return _TradingSize * _MaxRisk;
 }
 
 float Account::GetLeverage()
 {
     return _Leverage;
+}
+
+void Account::SetMaxRisk(float Risk)
+{
+    _MaxRisk = Risk / 100;
 }
 
 void Account::Setup()
@@ -32,7 +37,6 @@ void Account::Setup()
     } else {
         GetData();
     }
-    CalculateRequiredData();
 }
 
 int Account::ConsecutiveLosses()
@@ -108,9 +112,4 @@ void Account::GetData()
     std::cin >> _Leverage;
 
     SaveData();
-}
-
-void Account::CalculateRequiredData()
-{
-    _MaxRiskPerTrade = _TradingSize * _MaxRisk;
 }

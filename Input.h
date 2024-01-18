@@ -26,4 +26,5 @@ class Input
         void CancelTrade();
         void ActivateTrade();
         void EndTrade();
+        void SetRisk();
 };
