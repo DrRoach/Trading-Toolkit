@@ -14,10 +14,16 @@ class Input
         Account* _Account;
         std::vector<Trade*> _Trades;
 
+        std::vector<Trade*> GetActiveTrades();
+
         void LoadTrades();
         void Help();
         void Quit();
         void PositionSizeCalculator();
         void PrepTrade();
         void ListTrades();
+        void ListActiveTrades();
+        void CancelTrade();
+        void ActivateTrade();
+        void EndTrade();
 };
