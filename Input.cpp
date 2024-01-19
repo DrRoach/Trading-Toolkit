@@ -64,6 +64,11 @@ std::vector<Trade*> Input::GetActiveTrades()
 
 void Input::LoadTrades()
 {
+    // Clear out all trades
+    for (int i = 0; i < _Trades.size(); i++) {
+    }
+    _Trades.erase(_Trades.begin(), _Trades.end());
+
     // Load all of the saved trades
     DIR *dr;
     struct dirent *en;
@@ -82,6 +87,7 @@ void Input::LoadTrades()
                 double PositionSize;
                 bool Active;
                 bool Ended;
+                double ClosePrice;
                 int LineNum = 0;
                 std::string line;
                 while (getline(TradeDataFile, line)) {
@@ -101,9 +107,13 @@ void Input::LoadTrades()
                         case 4:
                             Ended = line == "1";
                             break;
+                        case 5:
+                            ClosePrice = std::stod(line);
+                            break;
                     }
                 }
-                _Trades.emplace_back(new Trade(OpenPrice, Risk, PositionSize, Active, Ended));
+                _Trades.emplace_back(new Trade(OpenPrice, Risk, PositionSize, Active, Ended, 
+                    ClosePrice));
             }
         }
         closedir(dr);
@@ -242,13 +252,22 @@ void Input::EndTrade()
     std::cout << "Which trade would you like to end?" << std::endl;
     std::cin >> TradeID;
 
-    if (TradeID >= GetActiveTrades().size()) {
+    std::vector<Trade*> ActiveTrades = GetActiveTrades();
+
+    if (TradeID >= ActiveTrades.size()) {
         std::cout << "Invalid trade ID" << std::endl;
         return;
     }
 
-    Trade* trade = _Trades.at(TradeID);
-    // TODO: Finish this
+    double ClosePrice;
+
+    std::cout << "What was the close price?" << std::endl;
+    std::cin >> ClosePrice;
+
+    Trade* trade = ActiveTrades.at(TradeID);
+    trade->End(ClosePrice);
+
+    LoadTrades();
 }
 
 void Input::SetRisk()

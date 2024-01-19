@@ -2,7 +2,6 @@
 
 Trade::Trade(double OpenPrice, double Risk, float MaxRiskPerTrade, float Leverage)
 {
-    std::cout << "Trade con" << std::endl << OpenPrice << " " << Risk << " " << MaxRiskPerTrade << " " << Leverage << std::endl;
     _OpenPrice = OpenPrice;
     _Risk = Risk;
     _PositionSize = CalculatePositionSizeInMoney(_OpenPrice, _Risk, MaxRiskPerTrade, Leverage);
@@ -11,13 +10,15 @@ Trade::Trade(double OpenPrice, double Risk, float MaxRiskPerTrade, float Leverag
     Save();
 }
 
-Trade::Trade(double OpenPrice, double Risk, double PositionSize, bool Active, bool Ended)
+Trade::Trade(double OpenPrice, double Risk, double PositionSize, bool Active, bool Ended, 
+    double ClosePrice)
 {
     _OpenPrice = OpenPrice;
     _Risk = Risk;
     _PositionSize = PositionSize;
     _Active = Active;
     _Ended = Ended;
+    _ClosePrice = ClosePrice;
 
     _FileName = "trades/" + std::to_string(_OpenPrice) + "-" + std::to_string(_Risk);
 }
@@ -73,9 +74,12 @@ void Trade::Delete()
     std::remove(_FileName.c_str());
 }
 
-void Trade::End()
+void Trade::End(double ClosePrice)
 {
     _Ended = true;
+    _Active = false;
+    _ClosePrice = ClosePrice;
+
     Save();
 }
 
@@ -86,6 +90,7 @@ void Trade::End()
  *  PositionSize
  *  Active
  *  Ended
+ *  ClosePrice
  */
 void Trade::Save()
 {
@@ -96,6 +101,7 @@ void Trade::Save()
         TradeFile << _PositionSize << "\n";
         TradeFile << _Active << "\n";
         TradeFile << _Ended << "\n";
+        TradeFile << _ClosePrice << "\n";
         TradeFile.close();
     }
 }
