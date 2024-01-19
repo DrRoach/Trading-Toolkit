@@ -65,8 +65,6 @@ std::vector<Trade*> Input::GetActiveTrades()
 void Input::LoadTrades()
 {
     // Clear out all trades
-    for (int i = 0; i < _Trades.size(); i++) {
-    }
     _Trades.erase(_Trades.begin(), _Trades.end());
 
     // Load all of the saved trades
