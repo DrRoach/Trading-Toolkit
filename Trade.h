@@ -20,6 +20,7 @@ class Trade
         double CalculatePositionSizeInMoney(double OpenPrice, double TradeRisk, float MaxRiskPerTrade, 
             float Leverage);
         int CalculatePositionSizeInUnits(double PositionSizeInMoney, float Leverage);
+        double CalculateRisk(double OpenPrice, double PositionSize, double Risk, float Leverage);
 
         void Activate();
         void Delete();

@@ -37,6 +37,8 @@ Input::Input()
             EndTrade();
         } else if (Command == "sr") {
             SetRisk();
+        } else if (Command == "rc") {
+            RiskCalculator();
         } else if (Command == "q") {
             // This is here so we don't enter "Unknown command" else
         } else {
@@ -132,6 +134,7 @@ void Input::Help()
     std::cout << "at - Activate trade. Activate a prepped trade" << std::endl;
     std::cout << "et - End trade. End an active trade" << std::endl;
     std::cout << "sr - Set risk. Set the maximum risk per trade as a percentage. WARNING - Risking more than 1% of your account can end badly." << std::endl;
+    std::cout << "rc - Risk calculator. Use open price and position size to work out how much will be lost on a losing trade." << std::endl;
     std::cout << "? - List available commands" << std::endl;
     std::cout << "q - Quit program" << std::endl;
 }
@@ -277,4 +280,24 @@ void Input::SetRisk()
     std::cin >> Risk;
 
     _Account->SetMaxRisk(Risk);
+}
+
+void Input::RiskCalculator()
+{
+    double Risk;
+    double PositionSize;
+    double OpenPrice;
+
+    std::cout << "What is the open price?" << std::endl;
+    std::cin >> OpenPrice;
+
+    std::cout << "What is the position size?" << std::endl;
+    std::cin >> PositionSize;
+
+    std::cout << "What is the risk?" << std::endl;
+    std::cin >> Risk;
+
+    Trade* trade;
+    std::cout << "Potential loss is: " << trade->CalculateRisk(OpenPrice, PositionSize, Risk,
+        _Account->GetLeverage()) << std::endl;
 }

@@ -27,4 +27,5 @@ class Input
         void ActivateTrade();
         void EndTrade();
         void SetRisk();
+        void RiskCalculator();
 };

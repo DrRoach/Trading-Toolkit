@@ -62,6 +62,12 @@ int Trade::CalculatePositionSizeInUnits(double PositionSizeInMoney, float Levera
     return PositionSizeInMoney * Leverage;
 }
 
+double Trade::CalculateRisk(double OpenPrice, double PositionSize, double Risk, float Leverage)
+{
+    int Units = (PositionSize * 30) / OpenPrice;
+    return Risk * Units;
+}
+
 void Trade::Activate()
 {
     _Active = true;
