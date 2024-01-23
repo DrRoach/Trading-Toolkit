@@ -4,6 +4,24 @@ This repo is a set of tools to improve trading performance.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U6U5TNX9M)
 
+## How to install
+
+To install run the following in the repo home folder:
+
+```
+make
+```
+
+This should output the executable file: `tradingtoolkit`
+
+## How to run
+
+To run the program in the repo home folder run the following:
+
+```
+./tradingtoolkit
+```
+
 ## Commands
 
 ### psc - Position Size Calculator
