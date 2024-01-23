@@ -2,6 +2,8 @@
 
 This repo is a set of tools to improve trading performance.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/U6U5TNX9M)
+
 ## Commands
 
 ### psc - Position Size Calculator
