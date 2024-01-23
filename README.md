@@ -11,11 +11,13 @@ Calculates the position size that you should open in both monetary value and the
 #### Inputs
 
 **Open Price** - The trade open price.
+
 **Trade Risk** - The distance between the open price and the stop loss.
 
 #### Extra Info
 
 **Max Risk Per Trade** - The maximum risk per trade based off your trading account size. By default this is set to 1%.
+
 **Leverage** - The leverage of what you are trading.
 
 ### pt - Prep Trade
@@ -25,11 +27,13 @@ Add trade to a prepped trade list that can be either activated or cancelled late
 #### Inputs
 
 **Open Price** - The trade open price.
+
 **Trade Risk** - The distance between the open price and the stop loss.
 
 #### Extra Info
 
 **Max Risk Per Trade** - The maximum risk per trade based off your trading account size. By default this is set to 1%.
+
 **Leverage** - The leverage of what you are trading.
 
 ### lt - List Trades
