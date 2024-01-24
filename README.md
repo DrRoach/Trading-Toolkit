@@ -106,6 +106,22 @@ The potential downside risk in monetary value. This command overrides the max tr
 
 **Risk** - The distance between the open price and the stop loss.
 
+### sas - Set Account Size
+
+Set the account size. This data is taken when the program is first ran but needs adjustment as different trades are won and lost. This is used in some calculations but is mainly superficial.
+
+#### Inputs
+
+**Account Size** - The new account size to be set.
+
+### sts - Set Trading Size
+
+Set the trading account size. This data is taken when the program is first ran but needs adjustment as different trades are won and lost. This is used when calculating position sizes so it is important to make sure that this is up to date. This should be smaller than account size to allow for losing trades without effecting the trading account size.
+
+#### Inputs
+
+**Trading Account Size** - The new trading account size to be set.
+
 ### ? - Help
 
 List all available commands

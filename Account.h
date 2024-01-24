@@ -13,6 +13,8 @@ class Account
         float GetLeverage();
 
         void SetMaxRisk(float Risk);
+        void SetAccountSize(float Size);
+        void SetTradingSize(float Size);
 
         void Setup();
         int ConsecutiveLosses();
