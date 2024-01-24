@@ -28,4 +28,6 @@ class Input
         void EndTrade();
         void SetRisk();
         void RiskCalculator();
+
+        bool ValidateInput();
 };

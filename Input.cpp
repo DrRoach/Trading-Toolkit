@@ -144,11 +144,19 @@ void Input::PositionSizeCalculator()
     double TradeRisk;
     double OpenPrice;
 
-    std::cout << "What is the open price?" << std::endl;
+    std::cout << "What is the open price? (enter \"c\" to cancel)" << std::endl;
     std::cin >> OpenPrice;
 
-    std::cout << "What is the trade risk?" << std::endl;
+    if (!ValidateInput()) {
+        return;
+    }
+
+    std::cout << "What is the trade risk? (enter \"c\" to cancel)" << std::endl;
     std::cin >> TradeRisk;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     Trade* trade;
 
@@ -165,11 +173,19 @@ void Input::PrepTrade()
     double OpenPrice;
     double TradeRisk;
 
-    std::cout << "What is the trade open price?" << std::endl;
+    std::cout << "What is the trade open price? (enter \"c\" to cancel)" << std::endl;
     std::cin >> OpenPrice;
 
-    std::cout << "What is the trade risk?" << std::endl;
+    if (!ValidateInput()) {
+        return;
+    }
+
+    std::cout << "What is the trade risk? (enter \"c\" to cancel)" << std::endl;
     std::cin >> TradeRisk;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     Trade* trade = new Trade(OpenPrice, TradeRisk, _Account->GetMaxRiskPerTrade(), 
         _Account->GetLeverage());
@@ -206,8 +222,12 @@ void Input::CancelTrade()
     int TradeID;
 
     ListTrades();
-    std::cout << "Which trade would you like to cancel?" << std::endl;
+    std::cout << "Which trade would you like to cancel? (enter \"c\" to cancel)" << std::endl;
     std::cin >> TradeID;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     Trade* trade = _Trades.at(TradeID);
     trade->Delete();
@@ -225,8 +245,12 @@ void Input::ActivateTrade()
     int TradeID;
 
     ListTrades();
-    std::cout << "Which trade would you like to activate?" << std::endl;
+    std::cout << "Which trade would you like to activate? (enter \"c\" to cancel)" << std::endl;
     std::cin >> TradeID;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     if (TradeID >= _Trades.size()) {
         std::cout << "Invalid trade ID" << std::endl;
@@ -250,8 +274,12 @@ void Input::EndTrade()
 
     ListActiveTrades();
 
-    std::cout << "Which trade would you like to end?" << std::endl;
+    std::cout << "Which trade would you like to end? (enter \"c\" to cancel)" << std::endl;
     std::cin >> TradeID;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     std::vector<Trade*> ActiveTrades = GetActiveTrades();
 
@@ -262,8 +290,12 @@ void Input::EndTrade()
 
     double ClosePrice;
 
-    std::cout << "What was the close price?" << std::endl;
+    std::cout << "What was the close price? (enter \"c\" to cancel)" << std::endl;
     std::cin >> ClosePrice;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     Trade* trade = ActiveTrades.at(TradeID);
     trade->End(ClosePrice);
@@ -275,9 +307,13 @@ void Input::SetRisk()
 {
     float Risk;
 
-    std::cout << "What risk would you like to set (as a percentage)?" << std::endl;
+    std::cout << "What risk would you like to set (as a percentage)? (enter \"c\" to cancel)" << std::endl;
 
     std::cin >> Risk;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     _Account->SetMaxRisk(Risk);
 }
@@ -288,16 +324,38 @@ void Input::RiskCalculator()
     double PositionSize;
     double OpenPrice;
 
-    std::cout << "What is the open price?" << std::endl;
+    std::cout << "What is the open price? (enter \"c\" to cancel)" << std::endl;
     std::cin >> OpenPrice;
 
-    std::cout << "What is the position size?" << std::endl;
+    if (!ValidateInput()) {
+        return;
+    }
+
+    std::cout << "What is the position size? (enter \"c\" to cancel)" << std::endl;
     std::cin >> PositionSize;
 
-    std::cout << "What is the risk?" << std::endl;
+    if (!ValidateInput()) {
+        return;
+    }
+
+    std::cout << "What is the risk? (enter \"c\" to cancel)" << std::endl;
     std::cin >> Risk;
+
+    if (!ValidateInput()) {
+        return;
+    }
 
     Trade* trade;
     std::cout << "Potential loss is: " << trade->CalculateRisk(OpenPrice, PositionSize, Risk,
         _Account->GetLeverage()) << std::endl;
+}
+
+bool Input::ValidateInput()
+{
+    if (!std::cin.good()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return false;
+    }
+    return true;
 }
