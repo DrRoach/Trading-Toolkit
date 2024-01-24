@@ -39,6 +39,10 @@ Input::Input()
             SetRisk();
         } else if (Command == "rc") {
             RiskCalculator();
+        } else if (Command == "sas") {
+            SetAccountSize();
+        } else if (Command == "sts") {
+            SetTradingSize();
         } else if (Command == "q") {
             // This is here so we don't enter "Unknown command" else
         } else {
@@ -135,6 +139,9 @@ void Input::Help()
     std::cout << "et - End trade. End an active trade" << std::endl;
     std::cout << "sr - Set risk. Set the maximum risk per trade as a percentage. WARNING - Risking more than 1% of your account can end badly." << std::endl;
     std::cout << "rc - Risk calculator. Use open price and position size to work out how much will be lost on a losing trade." << std::endl;
+    std::cout << "sas - Set account size. Set the account size which is used in other commands." <<
+        std::endl;
+    std::cout << "sts - Set trading size. Set the trading account size. This is used when calculating position size." << std::endl;
     std::cout << "? - List available commands" << std::endl;
     std::cout << "q - Quit program" << std::endl;
 }
@@ -348,6 +355,34 @@ void Input::RiskCalculator()
     Trade* trade;
     std::cout << "Potential loss is: " << trade->CalculateRisk(OpenPrice, PositionSize, Risk,
         _Account->GetLeverage()) << std::endl;
+}
+
+void Input::SetAccountSize()
+{
+    float Size;
+    
+    std::cout << "What is the new account size? (enter \"c\" to cancel)" << std::endl;
+    std::cin >> Size;
+
+    if (!ValidateInput()) {
+        return;
+    }
+
+    _Account->SetAccountSize(Size);
+}
+
+void Input::SetTradingSize()
+{
+    float Size;
+
+    std::cout << "What is the new traing account size? (enter \"c\" to cancel)" << std::endl;
+    std::cin >> Size;
+
+    if (!ValidateInput()) {
+        return;
+    }
+
+    _Account->SetTradingSize(Size);
 }
 
 bool Input::ValidateInput()

@@ -28,6 +28,8 @@ class Input
         void EndTrade();
         void SetRisk();
         void RiskCalculator();
+        void SetAccountSize();
+        void SetTradingSize();
 
         bool ValidateInput();
 };

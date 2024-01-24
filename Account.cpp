@@ -30,6 +30,18 @@ void Account::SetMaxRisk(float Risk)
     _MaxRisk = Risk / 100;
 }
 
+void Account::SetAccountSize(float Size)
+{
+    _Size = Size;
+    SaveData();
+}
+
+void Account::SetTradingSize(float Size)
+{
+    _TradingSize = Size;
+    SaveData();
+}
+
 void Account::Setup()
 {
     if (IsSetup()) {
